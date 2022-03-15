@@ -17,12 +17,10 @@ function LandingPage() {
         fetch(endpoint)
         .then(response => response.json())
         .then(response => {
-
             console.log(response.results)
             setMovies([response.results])
             setMainMovieImage(response.results[0])
         })
-
     }, [])
 
     return (
@@ -43,10 +41,18 @@ function LandingPage() {
 
                 {/* Movie Grid Cards */}
 
-                <Row >
-                    {Movies && Movies.map((movie))}
-
-                    <GridCards />
+                <Row gutter={[16, 16]}>
+                    {Movies && Movies.map((movie, index) => (
+                        <React.Fragment key={index}>
+                            <GridCards
+                                //props 넣어주기 
+                                image={movie.poster_path ?
+                                    `${IMAGE_BASE_URL}w500${movie.poster_path}` : null}
+                                movieId={movie.id}
+                                movieName={movie.original_title}
+                            />
+                        </React.Fragment>
+                    ))}
                 </Row>
 
             </div>
